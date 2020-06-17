@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const repositories = [];
+const projects = [];
 
 
 function logRequests(request, response, next){
@@ -33,69 +33,69 @@ function validateProjectID(request, response, next){
 }
 
 app.use(logRequests);
-app.use('/repositories/:id', validateProjectID);
+app.use('/projects/:id', validateProjectID);
 
-app.get('/repositories', (request, response) => {
-  return response.json(repositories);
+app.get('/projects', (request, response) => {
+  return response.json(projects);
 });
 
-app.post('/repositories', (request, response) => {
+app.post('/projects', (request, response) => {
   const { title }  = request.body;
 
-  const repository = {
+  const project = {
       id: uuid(), 
       title,
       task: []
   };
 
-  repositories.push(repository);
+  projects.push(project);
 
-  return response.json(repository);
+  return response.json(project);
 });
 
-app.put('/repositories/:id', (request, response) => {
+app.put('/projects/:id', (request, response) => {
   // title, url, techs do id contido na rota
   const { id } = request.params;
   const { title } = request.body;
   
-  const repository = repositories.find( repository => repository.id === id );
+  const project = projects.find( project => project.id === id );
 
   if(!isUuid(id)){
     return response.status(400).json({ error: 'Bad Request'});
   }
 
-  repository.title = title;
+  project.title = title;
 
-  return response.json(repository);
+  return response.json(project);
 });
 
-app.delete('/repositories/:id', (request, response) => {
+app.delete('/projects/:id', (request, response) => {
   const { id } = request.params;
 
-  const repositoryIndex = repositories.findIndex(repository => repository.id === id);
+  const projectIndex = projects.findIndex(project => project.id === id);
 
   if(!isUuid(id)) {
     return response.status(400).json({error: 'Bad Request'});
   }
 
-  repositories.splice(repositoryIndex, 1);
+  projects.splice(projectIndex, 1);
 
   return response.status(204).send();
 });
 
-app.post('/repositories/:id/tasks', (request, response) => {
+app.post('/projects/:id/tasks', (request, response) => {
   const { id } = request.params;
   const { title } = request.body;
 
-  const repositoryIndex = repositories.findIndex(repository => repository.id === id);
+  const projectIndex = projects.findIndex(project => project.id === id);
   
-  if(repositoryIndex < 0) {
+  if(projectIndex < 0) {
     return response.status(400).json( { error: 'Bad Request'});
   }
 
-  repositories[repositoryIndex].task.push(title);
+  projects[projectIndex].task.push(title);
   
-  return response.json(repositories[repositoryIndex]);
+  return response.json(projects[projectIndex]);
 });;
 
 
