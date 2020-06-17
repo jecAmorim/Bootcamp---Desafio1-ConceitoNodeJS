@@ -1,7 +1,9 @@
 <h2 align="center" color="#7159c1">
-	GoStack - Conceitos Node.js
+	GoStack
 	<br></br>
-	<img alt="gostack" title="#gostack" src="assets/logo.svg" width="250px" />
+	Desafio 1: Conceitos do NodeJS
+	<br></br>
+	<img alt="gostack" title="#gostack" src="assets/logo.png" width="250px" />
 </h2>
 
 <p align="center">
@@ -20,53 +22,57 @@
 </p>
 
 <p align="center">
-  <a href="#Oque-é-Node.js?">Oque é Node.js?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#Características-do-Node">Características do Node</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#Sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#Rotas">Rotas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#Exemplo">Exemplo</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#Middlewares">Middlewares</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#Como-Instalar-o-projeto">Como Instalar o projeto</a>
 </p>
 
-## Oque é Node.js?
-
-Plataforma que permite usar JavaScript no back-end, onde o back-end é a camada onde fica a regra de negócios da aplicação e a manipulação do banco de dado, como também o funcionamento  da aplicação com integrações com serviços de terceiros. 
-Vantagem de não lidar com eventos do usuário final, ele lida com rotas e integrações construída em cima da V8.
-
-
-## Características do Node
-
-:pushpin: Event-loop<br></br>
-:pushpin: Node single-thread<br></br>
-:pushpin: Non-blocking I/O<br></br>
+## Sobre o desafio
+Crie uma aplicação para armazenar projetos e suas tarefas do zero utilizando Express.
 
 ## Rotas
 
-GET:  Buscar informações do back-end
-POST: Criar uma informação no back-end
-PUT/PATH: Alterar uma informação no back-end
-DELETE: Deletar uma informação no back-end
+```bash
+POST /projects: A rota deve receber id e title dentro do corpo e cadastrar um novo projeto dentro de um array no seguinte formato: { id: "1", title: 'Novo projeto', tasks: [] }; Certifique-se de enviar tanto o ID quanto o título do projeto no formato string com aspas duplas.
+
+GET /projects: Rota que lista todos projetos e suas tarefas;
+
+PUT /projects/:id: A rota deve alterar apenas o título do projeto com o id presente nos parâmetros da rota;
+
+DELETE /projects/:id: A rota deve deletar o projeto com o id presente nos parâmetros da rota;
+
+POST /projects/:id/tasks: A rota deve receber um campo title e armazenar uma nova tarefa no array de tarefas de um projeto específico escolhido através do id presente nos parâmetros da rota;
+```
 
 ## Exemplo
 
-Supondo que temos um array com o Projeto 1 e Projeto 2, quando chamar a rota get, a saida deve ser um array com ['Projeto 1','Projeto 2']. 
-Simulação:
+Se eu chamar a rota POST /projects repassando { id: 1, title: 'Novo projeto' } e a rota POST /projects/1/tasks com { title: 'Nova tarefa' }, meu array de projetos deve ficar assim:
 
-```html
-app.get('/projects', (request, response) => {
-    return response.json([
-        'Projeto 1',
-        'Projeto 2',
-    ]);
-});
+```bash
+[
+  {
+    id: "1",
+    title: "Novo projeto",
+    tasks: ["Nova tarefa"]
+  }
+];
 ```
+
+## Middlewares
+
+Crie um middleware que será utilizado em todas rotas que recebem o ID do projeto nos parâmetros da URL que verifica se o projeto com aquele ID existe. Se não existir retorne um erro, caso contrário permita a requisição continuar normalmente;
+
+Crie um middleware global chamado em todas requisições que imprime (console.log) uma contagem de quantas requisições foram feitas na aplicação até então;
 
 ## Como Instalar o projeto
 ```bash
 # Clone this repository
-$ git clone https://github.com/jecAmorim/Next-Level-Week-1
+$ git clone https://github.com/jecAmorim/Bootcamp---Desafio1-ConceitoNodeJS
 
 # Go into the repository
-$ cd Next-Level-Week-1
+$ cd Bootcamp---Desafio1-ConceitoNodeJS
 
 # Install dependencies of backend
 $ cd backend
